@@ -1,0 +1,26 @@
+# Handle line endings automatically for files detected as text
+* text=auto
+
+# Force LF for Unity YAML files (cross-platform compatibility)
+*.meta text eol=lf
+*.prefab text eol=lf
+*.unity text eol=lf
+*.asset text eol=lf
+*.mat text eol=lf
+*.controller text eol=lf
+*.anim text eol=lf
+
+# C# files - let git normalize, checkout as native
+*.cs text diff=csharp
+
+# Keep CRLF for Windows-specific files
+*.sln text eol=crlf
+*.csproj text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.dll binary
+*.exe binary
+*.fbx binary
+*.unitypackage binary
