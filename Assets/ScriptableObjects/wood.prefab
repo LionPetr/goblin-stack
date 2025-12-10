@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8446072457518619736}
   - component: {fileID: 8087577450668261160}
   - component: {fileID: 3939484560113266564}
-  - component: {fileID: 6756362916012960745}
+  - component: {fileID: 4352794770588411087}
+  - component: {fileID: 6370703352877081681}
   m_Layer: 0
   m_Name: wood
   m_TagString: Item
@@ -112,7 +113,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &6756362916012960745
+--- !u!114 &4352794770588411087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780794258272016713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25b6ba0524971442b8e0f498c2ed0ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
+  inventoryPos: {fileID: 0}
+  travelTime: 1
+  arcHeight: 1
+  t: 0
+  resourceData: {fileID: 0}
+  inInventory: 0
+--- !u!54 &6370703352877081681
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,7 +154,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

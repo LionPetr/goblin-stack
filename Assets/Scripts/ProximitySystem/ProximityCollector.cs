@@ -6,13 +6,12 @@ using UnityEngine.UIElements;
 public class ProximityCollector : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float pullSpeed = 10f;
     public float collectionRadius = 5f;
-    private List<Rigidbody> items = new List<Rigidbody>();
 
-    public Transform stackOffsetPos;
-    //private Vector3 stackPositionOffset = new Vector3(0, 0, 0.7f);
+    public Transform inventoryRoot;
     private Inventory inventory;
+
+    private float slotSpacing = 0.2f;
 
     void Start()
     {
@@ -22,45 +21,26 @@ public class ProximityCollector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Item"))
+        Item item = other.GetComponent<Item>();
+        if(item)
         {
-            items.Add(other.attachedRigidbody);
-        }
-    }
+            Debug.Log(item.name);
+            Transform slot = new GameObject("InventorySlot").transform;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Item"))
-        {
-            items.Remove(other.attachedRigidbody);
+            slot.SetParent(inventoryRoot);
+
+            slot.localPosition = new Vector3(0, slotSpacing * inventory.itemCount, 0);
+            Debug.Log(slot.localPosition);
+            slot.localRotation = Quaternion.identity;
+
+            item.inventoryPos = slot;
+
+            inventory.addItem(item);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i = items.Count - 1; i >= 0; i--)
-        {
-            Rigidbody item = items[i];
-            //Debug.Log(Vector3.Distance(stackOffsetPos.position, item.transform.position));
-            if(Vector3.Distance(stackOffsetPos.position, item.transform.position) < 0.4f)
-            {
-                item.linearVelocity = Vector3.zero;
-                item.angularVelocity = Vector3.zero;
-                item.isKinematic = true;
-                items.Remove(item);
-
-                if(inventory)
-                {
-                    inventory.addItem(item);
-                }
-            }
-            else
-            {
-                Vector3 dir = (transform.position - item.transform.position).normalized;
-                item.AddForce(dir * pullSpeed, ForceMode.Acceleration);
-            }
-                
-        }
     }
 }

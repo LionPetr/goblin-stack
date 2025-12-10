@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private List<Rigidbody> items = new List<Rigidbody>();
+    private List<Item> items = new List<Item>();
 
+    public int itemCount = 0;
     public Transform inventoryPosition;
     public Vector3 itemOffset = new Vector3 (0, 0.2f, 0);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,13 +21,17 @@ public class Inventory : MonoBehaviour
     {
         for (int i = items.Count - 1; i >= 0; i--)
         {
-            items[i].transform.position = inventoryPosition.position + (i * itemOffset);
-            items[i].transform.rotation = inventoryPosition.rotation;
+            if (items[i].inInventory)
+            {
+                items[i].transform.position = inventoryPosition.position + (i * itemOffset);
+                items[i].transform.rotation = inventoryPosition.rotation;
+            }
         }
     }
 
-    public void addItem(Rigidbody item)
+    public void addItem(Item item)
     {
         items.Add(item);
+        itemCount++;
     }
 }
