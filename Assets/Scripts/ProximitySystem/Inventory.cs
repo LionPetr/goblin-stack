@@ -22,9 +22,9 @@ public class Inventory : MonoBehaviour
     {
         for (int i = items.Count - 1; i >= 0; i--)
         {
-            if (items[i].inInventory)
+            if (!items[i].traveling)
             {
-                items[i].transform.position = inventoryPosition.position + (i * itemOffset);
+                items[i].transform.position = inventoryPosition.position + (i * items[0].resourceData.offset);
                 items[i].transform.rotation = inventoryPosition.rotation;
             }
         }   
@@ -32,17 +32,16 @@ public class Inventory : MonoBehaviour
 
     public bool addItem(Item item)
     {
-        if (items.Count < inventorySize)
+        if (items.Count < inventorySize && (items.Count == 0 || items[0].resourceData.name == item.resourceData.name))
         {
             items.Add(item);
-            Transform slot = new GameObject("InventorySlot").transform;
 
-            slot.SetParent(inventoryPosition);
+            item.inventorySlot.transform.SetParent(inventoryPosition);
 
-            slot.localPosition = new Vector3(0, itemOffset.y * itemCount, 0);
-            slot.localRotation = Quaternion.identity;
+            item.inventorySlot.transform.localPosition = item.resourceData.offset * itemCount;
+            item.inventorySlot.transform.localRotation = Quaternion.identity;
+            item.traveling = true;
 
-            item.inventoryPos = slot;
             itemCount++;
             return true;
         }
