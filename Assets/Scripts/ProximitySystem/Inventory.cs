@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     private List<Item> items = new List<Item>();
 
     public int itemCount = 0;
+    public int inventorySize = 5;
     public Transform inventoryPosition;
     public Vector3 itemOffset = new Vector3 (0, 0.2f, 0);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,12 +27,25 @@ public class Inventory : MonoBehaviour
                 items[i].transform.position = inventoryPosition.position + (i * itemOffset);
                 items[i].transform.rotation = inventoryPosition.rotation;
             }
-        }
+        }   
     }
 
-    public void addItem(Item item)
+    public bool addItem(Item item)
     {
-        items.Add(item);
-        itemCount++;
+        if (items.Count < inventorySize)
+        {
+            items.Add(item);
+            Transform slot = new GameObject("InventorySlot").transform;
+
+            slot.SetParent(inventoryPosition);
+
+            slot.localPosition = new Vector3(0, itemOffset.y * itemCount, 0);
+            slot.localRotation = Quaternion.identity;
+
+            item.inventoryPos = slot;
+            itemCount++;
+            return true;
+        }
+        return false;
     }
 }
