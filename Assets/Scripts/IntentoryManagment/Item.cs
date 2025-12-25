@@ -6,8 +6,9 @@ public class Item : MonoBehaviour
     //pos and variables for adjusting resource travel mechanic
     public GameObject inventorySlot;
     public float travelTime = 4f;
-    public float arcHeight = 1.0f;
+    public float arcHeight = 20.0f;
     public float t;
+    private Vector3 start;
 
     public ResourceData resourceData;
     public bool traveling = false;
@@ -25,12 +26,17 @@ public class Item : MonoBehaviour
         }
     }
 
+    public void startTravel()
+    {
+        start = transform.position;
+        t = 0;
+        traveling = true;
+    }
     void TravelToInventory() 
     {
         t += Time.deltaTime / travelTime;
         t = Mathf.Clamp01(t);
 
-        Vector3 start = transform.position;
         Vector3 end = inventorySlot.transform.position;
 
         Vector3 linearPos = Vector3.Lerp(start, end, t);
@@ -42,7 +48,10 @@ public class Item : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, inventorySlot.transform.rotation, Time.deltaTime * 5f);
 
         if (t >= 1f)
-            traveling = false ;
+        {
+            traveling = false;
+            t = 0;
+        }
     }
 
 

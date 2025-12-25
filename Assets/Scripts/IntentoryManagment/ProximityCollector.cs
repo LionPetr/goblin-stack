@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class ProximityCollector : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float collectionRadius = 5f;
+    public float collectionRadius = 3.2f;
 
     private Inventory inventory;
 
@@ -25,6 +25,7 @@ public class ProximityCollector : MonoBehaviour
         {
             if (inventory.addItem(collectableItems[i]))
             {
+                collectableItems[i].GetComponent<BoxCollider>().enabled = false;
                 collectableItems.Remove(collectableItems[i]);
             }
         }

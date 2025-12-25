@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class Inventory : MonoBehaviour
 
     public bool addItem(Item item)
     {
-        if (items.Count < inventorySize && (items.Count == 0 || items[0].resourceData.name == item.resourceData.name))
+        if (itemCanBeAdded(item))
         {
             items.Add(item);
 
@@ -40,11 +41,38 @@ public class Inventory : MonoBehaviour
 
             item.inventorySlot.transform.localPosition = item.resourceData.offset * itemCount;
             item.inventorySlot.transform.localRotation = Quaternion.identity;
-            item.traveling = true;
+            item.startTravel();
 
             itemCount++;
             return true;
         }
         return false;
     }
+
+
+    public void removeItem(Item item)
+    {
+        if (items.Count != 0)
+        {
+            items.RemoveAt(items.Count - 1);
+        }
+    }
+
+    public bool itemCanBeAdded(Item item)
+    {
+        return (item != null && 
+                items.Count < inventorySize && 
+                (items.Count == 0 || items[0].resourceData.name == item.resourceData.name));
+    }
+
+    public Item GetFirstItem()
+    {
+        if (items.Count == 0)
+        {
+            return null;
+        }
+        return items[items.Count - 1];
+    }
 }
+
+

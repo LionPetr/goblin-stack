@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   inventorySlot: {fileID: 3745033592329237358}
   travelTime: 1
-  arcHeight: 1
+  arcHeight: 3
   t: 0
   resourceData: {fileID: 11400000, guid: 4910518e3d7995044ba684296d696d65, type: 2}
   traveling: 0
