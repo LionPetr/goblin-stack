@@ -1,9 +1,18 @@
+using Mono.Cecil;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/*
+ * Proximity collector designed to transfer items to the inventory and keep track of
+ * items that can be collected around it
+ * - constantly keeps track of items close enough to be collected
+ * - if the inventory component allows it the proximity collector sends it items
+ *   ready to be picked up. 
+ * last update: 1/5/2026
+ */
 public class ProximityCollector : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -11,7 +20,7 @@ public class ProximityCollector : MonoBehaviour
 
     private Inventory inventory;
 
-    private List<Item> collectableItems = new List<Item>();
+    private List<Resource> collectableResources = new List<Resource>();
 
     void Start()
     {
@@ -21,30 +30,30 @@ public class ProximityCollector : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < collectableItems.Count; i++)
+        for (int i = 0; i < collectableResources.Count; i++)
         {
-            if (inventory.addItem(collectableItems[i]))
+            if (inventory.addItem(collectableResources[i]))
             {
-                collectableItems.Remove(collectableItems[i]);
+                collectableResources.Remove(collectableResources[i]);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Item item = other.GetComponent<Item>();
+        Resource item = other.GetComponent<Resource>();
         if(item)
         {
-            collectableItems.Add(item);
+            collectableResources.Add(item);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Item item = other.GetComponent<Item>();
+        Resource item = other.GetComponent<Resource>();
         if (item)
         {
-            collectableItems.Remove(item);
+            collectableResources.Remove(item);
         }
     }
 
