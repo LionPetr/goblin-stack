@@ -25,10 +25,10 @@ public class DropOff : MonoBehaviour
 
             if (timer > dropOffSpeed)
             {
-                Item item = playerInventory.GetFirstItem();
-                if (dropOffInventory.addItem(item))
+                Resource resource = playerInventory.GetFirstItem();
+                if (dropOffInventory.addItem(resource))
                 {
-                    playerInventory.removeItem(item);
+                    playerInventory.removeItem(resource);
                 }
                 timer = 0f;
             }

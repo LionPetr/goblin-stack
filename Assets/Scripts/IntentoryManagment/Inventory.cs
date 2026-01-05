@@ -1,12 +1,22 @@
+using Mono.Cecil;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Progress;
 
+/*
+ * Inventory Component designed to store resources 
+ * - Manages Resource addition 
+ * - Keeps track of where the next resource should go
+ * 
+ * This is meant to be used in addition to other components like ProximityCollector or 
+ * different processing machines as their inventory
+ * last update: 1/5/2026
+ */
 public class Inventory : MonoBehaviour
 {
-    private List<Item> items = new List<Item>();
+    private List<Resource> resources = new List<Resource>();
 
     public int itemCount = 0;
     public int inventorySize = 5;
@@ -21,27 +31,27 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = items.Count - 1; i >= 0; i--)
+        for (int i = resources.Count - 1; i >= 0; i--)
         {
-            if (!items[i].traveling)
+            if (!resources[i].traveling)
             {
-                items[i].transform.position = inventoryPosition.position + (i * items[0].resourceData.offset);
-                items[i].transform.rotation = inventoryPosition.rotation;
+                resources[i].transform.position = inventoryPosition.position + (i * resources[0].resourceData.offset);
+                resources[i].transform.rotation = inventoryPosition.rotation;
             }
         }   
     }
 
-    public bool addItem(Item item)
+    public bool addItem(Resource resource)
     {
-        if (itemCanBeAdded(item))
+        if (resources.Count < inventorySize && (resources.Count == 0 || resources[0].resourceData.name == resource.resourceData.name))
         {
-            items.Add(item);
+            resources.Add(resource);
 
-            item.inventorySlot.transform.SetParent(inventoryPosition);
+            resource.inventorySlot.transform.SetParent(inventoryPosition);
 
-            item.inventorySlot.transform.localPosition = item.resourceData.offset * itemCount;
-            item.inventorySlot.transform.localRotation = Quaternion.identity;
-            item.startTravel();
+            resource.inventorySlot.transform.localPosition = resource.resourceData.offset * itemCount;
+            resource.inventorySlot.transform.localRotation = Quaternion.identity;
+            resource.startTravel();
 
             itemCount++;
             return true;
@@ -50,28 +60,28 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public void removeItem(Item item)
+    public void removeItem(Resource resource)
     {
-        if (items.Count != 0)
+        if (resources.Count != 0)
         {
-            items.RemoveAt(items.Count - 1);
+            resources.RemoveAt(resources.Count - 1);
         }
     }
 
-    public bool itemCanBeAdded(Item item)
+    public bool itemCanBeAdded(Resource resource)
     {
-        return (item != null && 
-                items.Count < inventorySize && 
-                (items.Count == 0 || items[0].resourceData.name == item.resourceData.name));
+        return (resource != null && 
+                resources.Count < inventorySize && 
+                (resources.Count == 0 || resources[0].resourceData.name == resource.resourceData.name));
     }
 
-    public Item GetFirstItem()
+    public Resource GetFirstItem()
     {
-        if (items.Count == 0)
+        if (resources.Count == 0)
         {
             return null;
         }
-        return items[items.Count - 1];
+        return resources[resources.Count - 1];
     }
 }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3386332877058150050}
   - component: {fileID: 7700653824182427409}
   - component: {fileID: 3161212589618289630}
-  - component: {fileID: 7803403438121420186}
+  - component: {fileID: -2399595523144877778}
   - component: {fileID: 7843273425946128334}
   m_Layer: 0
   m_Name: wood
@@ -114,7 +114,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7803403438121420186
+--- !u!114 &-2399595523144877778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,12 +123,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5115295252662213601}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e25b6ba0524971442b8e0f498c2ed0ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 407bbdeb470257949be01401f5f29a68, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Item
+  m_EditorClassIdentifier: Assembly-CSharp::Resource
   inventorySlot: {fileID: 3745033592329237358}
   travelTime: 1
-  arcHeight: 3
+  arcHeight: 4
   t: 0
   resourceData: {fileID: 11400000, guid: 4910518e3d7995044ba684296d696d65, type: 2}
   traveling: 0

@@ -1,7 +1,14 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+/*
+ * Resource class is responsible for all the things a resource should do 
+ * - has a TravelToInventory method which allows the resource to travel 
+ *   to a position assigned by the inventory 
+ * - contains ResourceData object which contains information about the current resource 
+ * 1/5/2026
+ */
+public class Resource : MonoBehaviour
 {
     //pos and variables for adjusting resource travel mechanic
     public GameObject inventorySlot;
@@ -29,6 +36,7 @@ public class Item : MonoBehaviour
     public void startTravel()
     {
         start = transform.position;
+        Debug.Log(start);
         t = 0;
         traveling = true;
     }
