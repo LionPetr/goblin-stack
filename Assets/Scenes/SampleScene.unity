@@ -1307,6 +1307,10 @@ PrefabInstance:
       value: wood
       objectReference: {fileID: 0}
     - target: {fileID: 7803403438121420186, guid: 70e0ce9c655970d47b8f95bef2a3ffe1, type: 3}
+      propertyPath: arcHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7803403438121420186, guid: 70e0ce9c655970d47b8f95bef2a3ffe1, type: 3}
       propertyPath: inventorySlot
       value: 
       objectReference: {fileID: 11486198}

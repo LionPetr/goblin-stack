@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 /*
  * Inventory Component designed to store resources 
@@ -39,6 +40,8 @@ public class Inventory : MonoBehaviour
         }   
     }
 
+
+
     public bool addItem(Resource resource)
     {
         if (resources.Count < inventorySize && (resources.Count == 0 || resources[0].resourceData.name == resource.resourceData.name))
@@ -49,7 +52,7 @@ public class Inventory : MonoBehaviour
 
             resource.inventorySlot.transform.localPosition = resource.resourceData.offset * itemCount;
             resource.inventorySlot.transform.localRotation = Quaternion.identity;
-            resource.traveling = true;
+            resource.startTravel();
 
             itemCount++;
             return true;
