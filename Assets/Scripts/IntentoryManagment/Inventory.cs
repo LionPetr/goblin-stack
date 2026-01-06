@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
 {
     private List<Resource> resources = new List<Resource>();
 
-    public int itemCount = 0;
+    public int resourceCount = 0;
     public int inventorySize = 5;
     public Transform inventoryPosition;
     public Vector3 itemOffset = new Vector3 (0, 0.2f, 0);
@@ -43,17 +43,18 @@ public class Inventory : MonoBehaviour
 
     public bool addItem(Resource resource)
     {
+        Debug.Log("trying to add an item");
         if (resources.Count < inventorySize && (resources.Count == 0 || resources[0].resourceData.name == resource.resourceData.name))
         {
             resources.Add(resource);
 
             resource.inventorySlot.transform.SetParent(inventoryPosition);
 
-            resource.inventorySlot.transform.localPosition = resource.resourceData.offset * itemCount;
+            resource.inventorySlot.transform.localPosition = resource.resourceData.offset * resourceCount;
             resource.inventorySlot.transform.localRotation = Quaternion.identity;
             resource.startTravel();
 
-            itemCount++;
+            resourceCount++;
             return true;
         }
         return false;
@@ -65,6 +66,7 @@ public class Inventory : MonoBehaviour
         if (resources.Count != 0)
         {
             resources.RemoveAt(resources.Count - 1);
+            resourceCount--;
         }
     }
 
