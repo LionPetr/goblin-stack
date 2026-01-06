@@ -19,16 +19,16 @@ public class DropOff : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerDropping)
+        if (playerDropping && playerInventory.resourceCount > 0)
         {
             timer += Time.deltaTime;
 
             if (timer > dropOffSpeed)
             {
-                Item item = playerInventory.GetFirstItem();
-                if (dropOffInventory.addItem(item))
+                Resource resource = playerInventory.GetFirstResource();
+                if (dropOffInventory.addResource(resource))
                 {
-                    playerInventory.removeItem(item);
+                    playerInventory.removeResource();
                 }
                 timer = 0f;
             }

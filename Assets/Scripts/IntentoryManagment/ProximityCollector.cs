@@ -20,7 +20,7 @@ public class ProximityCollector : MonoBehaviour
 
     private Inventory inventory;
 
-    private List<Item> collectableItems = new List<Item>();
+    private List<Resource> collectableResources = new List<Resource>();
 
     void Start()
     {
@@ -30,31 +30,31 @@ public class ProximityCollector : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < collectableItems.Count; i++)
+        for (int i = 0; i < collectableResources.Count; i++)
         {
-            if (inventory.addItem(collectableItems[i]))
+            if (inventory.addResource(collectableResources[i]))
             {
-                collectableItems[i].GetComponent<BoxCollider>().enabled = false;
-                collectableItems.Remove(collectableItems[i]);
+                collectableResources[i].GetComponent<BoxCollider>().enabled = false;
+                collectableResources.Remove(collectableResources[i]);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Item item = other.GetComponent<Item>();
-        if(item)
+        Resource resource = other.GetComponent<Resource>();
+        if(resource)
         {
-            collectableItems.Add(item);
+            collectableResources.Add(resource);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Item item = other.GetComponent<Item>();
-        if (item)
+        Resource resource = other.GetComponent<Resource>();
+        if (resource)
         {
-            collectableItems.Remove(item);
+            collectableResources.Remove(resource);
         }
     }
 

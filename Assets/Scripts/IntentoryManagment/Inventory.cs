@@ -15,9 +15,9 @@ using static UnityEditor.Progress;
  */
 public class Inventory : MonoBehaviour
 {
-    private List<Item> items = new List<Item>();
+    private List<Resource> resources = new List<Resource>();
 
-    public int itemCount = 0;
+    public int resourceCount = 0;
     public int inventorySize = 5;
     public Transform inventoryPosition;
     public Vector3 itemOffset = new Vector3 (0, 0.2f, 0);
@@ -30,57 +30,58 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = items.Count - 1; i >= 0; i--)
+        for (int i = resources.Count - 1; i >= 0; i--)
         {
-            if (!items[i].traveling)
+            if (!resources[i].traveling)
             {
-                items[i].transform.position = inventoryPosition.position + (i * items[0].resourceData.offset);
-                items[i].transform.rotation = inventoryPosition.rotation;
+                resources[i].transform.position = inventoryPosition.position + (i * resources[0].resourceData.offset);
+                resources[i].transform.rotation = inventoryPosition.rotation;
             }
         }   
     }
 
-    public bool addItem(Item item)
+    public bool addResource(Resource resource)
     {
-        if (itemCanBeAdded(item))
+        if (resourceCanBeAdded(resource))
         {
-            items.Add(item);
+            resources.Add(resource);
 
-            item.inventorySlot.transform.SetParent(inventoryPosition);
+            resource.inventorySlot.transform.SetParent(inventoryPosition);
 
-            item.inventorySlot.transform.localPosition = item.resourceData.offset * itemCount;
-            item.inventorySlot.transform.localRotation = Quaternion.identity;
-            item.startTravel();
+            resource.inventorySlot.transform.localPosition = resource.resourceData.offset * resourceCount;
+            resource.inventorySlot.transform.localRotation = Quaternion.identity;
+            resource.startTravel();
 
-            itemCount++;
+            resourceCount++;
             return true;
         }
         return false;
     }
 
 
-    public void removeItem(Item item)
+    public void removeResource()
     {
-        if (items.Count != 0)
+        if (resources.Count != 0)
         {
-            items.RemoveAt(items.Count - 1);
+            resources.RemoveAt(resources.Count - 1);
+            resourceCount--;
         }
     }
 
-    public bool itemCanBeAdded(Item item)
+    public bool resourceCanBeAdded(Resource resource)
     {
-        return (item != null && 
-                items.Count < inventorySize && 
-                (items.Count == 0 || items[0].resourceData.name == item.resourceData.name));
+        return (resource != null && 
+                resources.Count < inventorySize && 
+                (resources.Count == 0 || resources[0].resourceData.name == resource.resourceData.name));
     }
 
-    public Item GetFirstItem()
+    public Resource GetFirstResource()
     {
-        if (items.Count == 0)
+        if (resources.Count == 0)
         {
             return null;
         }
-        return items[items.Count - 1];
+        return resources[resources.Count - 1];
     }
 }
 
