@@ -16,7 +16,7 @@ using UnityEngine.UIElements;
 public class ProximityCollector : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float collectionRadius = 5f;
+    public float collectionRadius = 3.2f;
 
     private Inventory inventory;
 
@@ -32,8 +32,9 @@ public class ProximityCollector : MonoBehaviour
     {
         for (int i = 0; i < collectableResources.Count; i++)
         {
-            if (inventory.addItem(collectableResources[i]))
+            if (inventory.addResource(collectableResources[i]))
             {
+                collectableResources[i].GetComponent<BoxCollider>().enabled = false;
                 collectableResources.Remove(collectableResources[i]);
             }
         }
@@ -41,19 +42,19 @@ public class ProximityCollector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Resource item = other.GetComponent<Resource>();
-        if(item)
+        Resource resource = other.GetComponent<Resource>();
+        if(resource)
         {
-            collectableResources.Add(item);
+            collectableResources.Add(resource);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Resource item = other.GetComponent<Resource>();
-        if (item)
+        Resource resource = other.GetComponent<Resource>();
+        if (resource)
         {
-            collectableResources.Remove(item);
+            collectableResources.Remove(resource);
         }
     }
 

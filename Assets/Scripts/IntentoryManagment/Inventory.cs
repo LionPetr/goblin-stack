@@ -17,7 +17,7 @@ public class Inventory : MonoBehaviour
 {
     private List<Resource> resources = new List<Resource>();
 
-    public int itemCount = 0;
+    public int resourceCount = 0;
     public int inventorySize = 5;
     public Transform inventoryPosition;
     public Vector3 itemOffset = new Vector3 (0, 0.2f, 0);
@@ -40,23 +40,49 @@ public class Inventory : MonoBehaviour
         }   
     }
 
-
-
-    public bool addItem(Resource resource)
+    public bool addResource(Resource resource)
     {
-        if (resources.Count < inventorySize && (resources.Count == 0 || resources[0].resourceData.name == resource.resourceData.name))
+        if (resourceCanBeAdded(resource))
         {
             resources.Add(resource);
 
             resource.inventorySlot.transform.SetParent(inventoryPosition);
 
-            resource.inventorySlot.transform.localPosition = resource.resourceData.offset * itemCount;
+            resource.inventorySlot.transform.localPosition = resource.resourceData.offset * resourceCount;
             resource.inventorySlot.transform.localRotation = Quaternion.identity;
             resource.startTravel();
 
-            itemCount++;
+            resourceCount++;
             return true;
         }
         return false;
     }
+
+
+    public void removeResource()
+    {
+        if (resources.Count != 0)
+        {
+            resources.RemoveAt(resources.Count - 1);
+            resourceCount--;
+        }
+    }
+
+    public bool resourceCanBeAdded(Resource resource)
+    {
+        return (resource != null && 
+                resources.Count < inventorySize && 
+                (resources.Count == 0 || resources[0].resourceData.name == resource.resourceData.name));
+    }
+
+    public Resource GetFirstResource()
+    {
+        if (resources.Count == 0)
+        {
+            return null;
+        }
+        return resources[resources.Count - 1];
+    }
 }
+
+
